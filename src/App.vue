@@ -1,24 +1,55 @@
 <template>
-    <div class="container container-fluid" data-bs-theme="dark">
-        <RecordedRaceList msg="This is gonna be great!" />
+    <nav class="navbar">
+        <div class="container-fluid justify-content-start">
+            <router-link
+                to="/recorded-races"
+                id="navigate-back"
+                class="navbar-brand btn btn-icon btn-primary"
+                v-show="canNavigateBack">
+                <i class="bi bi-arrow-left"></i>
+            </router-link>
+            <span class="navbar-text mb-0 h5 text-primary">
+                {{ stateTitle }}
+            </span>
+            <span class="d-flex flex-fill"></span>
+            <form class="d-flex" role="search">
+                <button class="btn btn-icon btn-primary">
+                    <i class="bi bi-gear-fill"></i>
+                </button>
+            </form>
+        </div>
+    </nav>
+    <div id="mainContent" class="container-fluid">
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-import RecordedRaceList from './components/RecordedRaceList.vue';
-
 export default {
     name: 'App',
-    components: {
-        RecordedRaceList
+    computed: {
+        stateTitle() {
+            const { title } = this.$route.meta;
+
+            if (typeof title === 'function') {
+                return title.call(this.$route);
+            }
+
+            return title;
+        },
+        canNavigateBack() {
+            return !this.$route.meta.isMain;
+        }
     }
 };
 </script>
 
 <style lang="scss">
-.container {
-    --bs-gutter-y: 1.5rem;
-    padding-top: calc(var(--bs-gutter-y) * 0.5);
-    padding-bottom: calc(var(--bs-gutter-y) * 0.5);
+nav.navbar #navigate-back {
+    margin-right: 5px;
+}
+
+#mainContent {
+    padding: calc(1.5rem * 0.5);
 }
 </style>

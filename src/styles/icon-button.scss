@@ -1,0 +1,17 @@
+.btn.btn-icon {
+    background: transparent;
+    border: 0;
+
+    &.btn-primary {
+        color: $primary;
+
+        &:hover {
+            background: rgba($primary, 0.1);
+        }
+
+        &:focus,
+        &:active {
+            background: rgba($primary, 0.25);
+        }
+    }
+}
